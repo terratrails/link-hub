@@ -1,39 +1,78 @@
 /* =============================================================================
-   style.css — styles communs aux deux pages.
-   Mobile-first : tout est écrit pour 380 px de large d'abord, les media
-   queries n'élargissent qu'ensuite.
+   style.css — feuille de style unique des deux pages.
 
-   Si tu veux changer l'apparence, commence par les variables ci-dessous :
-   une seule valeur y suffit pour reteindre tout le site.
+   Le site tient sur un seul système : une échelle d'espacement, une échelle
+   de typo, une seule « surface » (le fond des cartes, blocs et boutons) et
+   un seul en-tête de section. Le hub et la page montage n'ont donc pas deux
+   apparences qui se ressemblent — ils partagent littéralement les mêmes règles.
+
+   Mobile-first : tout est écrit pour 380 px de large, les media queries
+   n'élargissent qu'ensuite.
+
+   Pour reteindre le site : une seule variable, --accent.
    ========================================================================== */
 
 :root {
-  /* --- Couleurs (à éditer ici, nulle part ailleurs) --------------------- */
-  --bg: #08080a;            /* fond quasi-noir */
-  --surface: #101014;       /* fond des boutons et blocs */
-  --surface-hover: #16161c; /* même chose, au survol */
-  --line: #23232b;          /* filets et bordures */
-  --line-strong: #34343f;   /* bordures au survol */
-  --text: #edece9;          /* blanc cassé */
-  --text-dim: #8d8d97;      /* texte secondaire */
-  --accent: #b7b1ff;        /* l'unique accent, discret */
-  --accent-soft: rgba(183, 177, 255, 0.09); /* aplat très léger de l'accent */
+  /* --- Couleurs ---------------------------------------------------------
+     Le fond n'est pas un gris neutre : il tire très légèrement vers le vert,
+     ce qui fait respirer l'accent sans qu'on sache dire pourquoi. */
+  --bg: #070907;
+  --surface: #0e120f;
+  --surface-hover: #141a16;
+  --line: #1f261f;
+  --line-strong: #333d34;
+  --text: #eceee9;
+  --text-dim: #8b948b;
+  --accent: #9dd3a7;
+  --accent-soft: rgba(157, 211, 167, 0.08);
+  --accent-line: rgba(157, 211, 167, 0.32);
+  --accent-line-hover: rgba(157, 211, 167, 0.6);
 
-  /* --- Rythme ----------------------------------------------------------- */
+  /* --- Échelle d'espacement ---------------------------------------------
+     Toutes les marges du site sortent d'ici. Rien n'est écrit « à la main ». */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 88px;
+
+  /* --- Échelle typographique -------------------------------------------- */
+  --t-micro: 0.75rem;    /* surtitres, labels */
+  --t-small: 0.8125rem;  /* légendes, pied de page */
+  --t-body: 0.875rem;    /* descriptions */
+  --t-base: 1rem;        /* titres de carte */
+  --t-lead: 1.0625rem;   /* chapô */
+  --t-name: 1.625rem;    /* nom sur le hub */
+  --t-display: 1.875rem; /* titre de la page montage */
+
+  /* --- Formes ------------------------------------------------------------ */
   --radius: 14px;
-  --gap: 12px;
-  --screen-margin: 20px;
-  --hub-width: 600px;       /* largeur max du hub */
-  --page-width: 880px;      /* largeur max de la page montage, plus « vitrine » */
+  --radius-sm: 10px;
+  --border: 1px solid var(--line);
 
-  /* Police système uniquement : aucun fichier de police à télécharger. */
+  /* --- Largeurs ---------------------------------------------------------- */
+  --screen-margin: 20px;
+  --hub-width: 600px;
+  --page-width: 880px;
+
+  /* --- Mouvement --------------------------------------------------------- */
+  --ease: 160ms cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* Police système uniquement : aucun fichier à télécharger, rien qui
+     clignote au premier affichage. */
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
 
   color-scheme: dark;
 }
 
-/* --- Remise à zéro minimale --------------------------------------------- */
+/* =============================================================================
+   REMISE À ZÉRO
+   ========================================================================== */
 
 *,
 *::before,
@@ -54,11 +93,13 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Voile d'accent très léger en haut de page : la seule fantaisie du design. */
+  /* Voile d'accent en haut de page : la seule fantaisie du design, et elle
+     est identique sur les deux pages — c'est ce qui les fait appartenir au
+     même site avant même qu'on lise quoi que ce soit. */
   background-image: radial-gradient(
     120% 60% at 50% -10%,
     var(--accent-soft) 0%,
-    transparent 60%
+    transparent 62%
   );
   background-repeat: no-repeat;
 }
@@ -86,15 +127,12 @@ a {
   text-decoration: none;
 }
 
-/* --- Accessibilité : le focus clavier doit toujours se voir -------------- */
-
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
 
-/* Respect du réglage système « réduire les animations ». */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
@@ -102,13 +140,15 @@ a {
   }
 }
 
-/* --- Contenants ---------------------------------------------------------- */
+/* =============================================================================
+   CONTENANTS — mêmes marges verticales sur les deux pages
+   ========================================================================== */
 
 .wrap {
   width: 100%;
   max-width: var(--hub-width);
   margin: 0 auto;
-  padding: 56px var(--screen-margin) 64px;
+  padding: var(--s-8) var(--screen-margin) var(--s-8);
 }
 
 .wrap--wide {
@@ -118,9 +158,88 @@ a {
 .noscript {
   max-width: var(--hub-width);
   margin: 0 auto;
-  padding: 16px var(--screen-margin) 0;
+  padding: var(--s-4) var(--screen-margin) 0;
   color: var(--text-dim);
-  font-size: 0.875rem;
+  font-size: var(--t-body);
+}
+
+/* =============================================================================
+   SURFACE PARTAGÉE
+   -----------------------------------------------------------------------------
+   Le cœur de l'unification. Les liens du hub (.card), les blocs d'offre
+   (.block), les boutons de contact (.btn) et les cadres de réalisation
+   (.work__media) sont TOUS la même surface : même fond, même bordure, même
+   rayon, même réaction au survol. Ce qui change entre eux, c'est uniquement
+   le contenu et le padding.
+   ========================================================================== */
+
+.card,
+.block,
+.btn,
+.work__media {
+  background: var(--surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+/* Le survol est le même partout : la bordure s'éclaircit, le fond monte d'un
+   cran. Aucune ombre, aucun déplacement — sur mobile ça ne servirait à rien. */
+@media (hover: hover) {
+  .card:hover,
+  .btn:hover,
+  a.work__media:hover {
+    background: var(--surface-hover);
+    border-color: var(--line-strong);
+  }
+}
+
+/* Un seul élément teinté par page : le lien mis en avant sur le hub, le
+   bouton e-mail sur la page montage. Même recette dans les deux cas. */
+.card--featured,
+.btn--accent {
+  background: linear-gradient(180deg, var(--accent-soft), transparent),
+    var(--surface);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .card--featured:hover,
+  .btn--accent:hover {
+    border-color: var(--accent-line-hover);
+  }
+}
+
+/* =============================================================================
+   EN-TÊTE DE SECTION PARTAGÉ
+   -----------------------------------------------------------------------------
+   « RÉSEAUX » sur le hub et « RÉALISATIONS » sur la page montage sont le même
+   objet : mêmes capitales, même interlettrage, même filet. Le hub n'affiche
+   pas le filet parce que ses sections sont plus courtes ; c'est la seule
+   différence, et elle tient en une règle.
+   ========================================================================== */
+
+.group__title,
+.section__title {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  margin-bottom: var(--s-3);
+}
+
+.section__title {
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-5);
+  border-bottom: var(--border);
+}
+
+.section__desc {
+  margin-top: calc(var(--s-2) * -1);
+  margin-bottom: var(--s-5);
+  color: var(--text-dim);
+  font-size: var(--t-body);
 }
 
 /* =============================================================================
@@ -129,98 +248,95 @@ a {
 
 .profile {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: var(--s-7);
+}
+
+.avatar,
+.monogram {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  margin: 0 auto var(--s-5);
+  border: var(--border);
 }
 
 .avatar {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  margin: 0 auto 18px;
   object-fit: cover;
-  border: 1px solid var(--line);
+}
+
+/* Sans photo, on n'affiche pas un trou : un monogramme, dessiné avec les
+   mêmes variables que le reste. Il reprend exactement la surface des cartes. */
+.monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--accent-soft), transparent),
+    var(--surface);
+  border-color: var(--accent-line);
+  color: var(--accent);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .name {
-  font-size: 1.5rem;
+  font-size: var(--t-name);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .tagline {
-  margin-top: 8px;
+  margin: var(--s-3) auto 0;
   color: var(--text-dim);
   font-size: 0.9375rem;
   max-width: 34ch;
-  margin-left: auto;
-  margin-right: auto;
 }
-
-/* --- Sections ----------------------------------------------------------- */
 
 .group {
-  margin-top: 36px;
-}
-
-.group__title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-dim);
-  margin-bottom: 12px;
-  padding-left: 2px;
+  margin-top: var(--s-7);
 }
 
 .stack {
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
+  gap: var(--s-3);
 }
 
-/* --- Boutons du hub ----------------------------------------------------- */
+/* --- Le lien du hub ------------------------------------------------------ */
 
 .card {
   position: relative;
   display: block;
-  padding: 16px 44px 16px 18px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  transition: background-color 160ms ease, border-color 160ms ease,
-    transform 160ms ease;
+  padding: var(--s-4) var(--s-7) var(--s-4) var(--s-5);
+  transition: background-color var(--ease), border-color var(--ease),
+    transform var(--ease);
 }
 
 .card__title {
   display: block;
-  font-size: 1rem;
+  font-size: var(--t-base);
   font-weight: 550;
 }
 
 .card__desc {
   display: block;
-  margin-top: 3px;
+  margin-top: var(--s-1);
   color: var(--text-dim);
-  font-size: 0.875rem;
+  font-size: var(--t-body);
   line-height: 1.45;
 }
 
 .card__chevron {
   position: absolute;
-  right: 18px;
+  right: var(--s-5);
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-dim);
   font-size: 0.9375rem;
-  transition: color 160ms ease, transform 160ms ease;
+  transition: color var(--ease), transform var(--ease);
 }
 
-/* Le survol reste volontairement sobre : bordure + fond, rien de plus. */
 @media (hover: hover) {
-  .card:hover {
-    background: var(--surface-hover);
-    border-color: var(--line-strong);
-  }
   .card:hover .card__chevron {
     color: var(--text);
     transform: translate(2px, -50%);
@@ -231,132 +347,102 @@ a {
   transform: scale(0.995);
 }
 
-/* Le bouton mis en avant : le seul élément teinté de la page. */
 .card--featured {
-  background: linear-gradient(180deg, var(--accent-soft), transparent),
-    var(--surface);
-  border-color: rgba(183, 177, 255, 0.35);
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: var(--s-5);
+  padding-bottom: var(--s-5);
 }
 
 .card--featured .card__title {
-  font-size: 1.0625rem;
+  font-size: var(--t-lead);
   color: var(--accent);
+}
+
+.card--featured .card__desc {
+  color: var(--text-dim);
 }
 
 .card--featured .card__chevron {
   color: var(--accent);
 }
 
-@media (hover: hover) {
-  .card--featured:hover {
-    border-color: rgba(183, 177, 255, 0.6);
-  }
-}
-
 /* Lien encore en placeholder ("#") : signalé, mais pas invisible. */
 .card.is-placeholder {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .card.is-placeholder .card__chevron {
-  content: none;
   opacity: 0.4;
 }
 
-/* --- Pied de page ------------------------------------------------------- */
-
 .footer__text {
-  margin-top: 48px;
+  margin-top: var(--s-8);
   text-align: center;
   color: var(--text-dim);
-  font-size: 0.8125rem;
+  font-size: var(--t-small);
 }
 
 /* =============================================================================
-   PAGE 2 — MONTAGE (mise en page « vitrine »)
+   PAGE 2 — MONTAGE
    ========================================================================== */
 
 .montage-header {
-  margin-bottom: 48px;
+  margin-bottom: var(--s-7);
   max-width: 38ch;
 }
 
 .eyebrow {
-  font-size: 0.75rem;
+  font-size: var(--t-micro);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--accent);
-  margin-bottom: 14px;
+  margin-bottom: var(--s-4);
 }
 
 .display {
-  font-size: 1.75rem;
-  line-height: 1.2;
+  font-size: var(--t-display);
+  line-height: 1.15;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .lede {
-  margin-top: 16px;
+  margin-top: var(--s-4);
   color: var(--text-dim);
-  font-size: 1rem;
+  font-size: var(--t-base);
   max-width: 46ch;
 }
 
 .section {
-  margin-top: 56px;
+  margin-top: var(--s-8);
 }
 
-.section__title {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--text-dim);
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--line);
-}
-
-.section__desc {
-  margin-top: -8px;
-  margin-bottom: 20px;
-  color: var(--text-dim);
-  font-size: 0.9375rem;
-}
-
-/* --- Grilles : une colonne sur mobile, jamais plus ---------------------- */
+/* --- Grilles : une colonne sur mobile, jamais plus ----------------------- */
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: var(--s-4);
 }
 
 /* --- Blocs « Ce que je propose » ---------------------------------------- */
 
 .block {
-  padding: 20px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  padding: var(--s-5);
 }
 
 .block__title {
-  font-size: 1rem;
+  font-size: var(--t-base);
   font-weight: 600;
 }
 
 .block__desc {
-  margin-top: 8px;
+  margin-top: var(--s-2);
   color: var(--text-dim);
-  font-size: 0.875rem;
+  font-size: var(--t-body);
 }
 
-/* --- Grille « Réalisations » ------------------------------------------- */
+/* --- Grille « Réalisations » -------------------------------------------- */
 
 .work {
   margin: 0;
@@ -366,10 +452,7 @@ a {
   position: relative;
   display: block;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius);
   overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--line);
 }
 
 .work__media iframe {
@@ -379,10 +462,10 @@ a {
   display: block;
 }
 
-/* Les reels sont verticaux : on garde un cadre plus haut. */
+/* Les reels sont verticaux : cadre plus haut. */
 .work__media--link {
   aspect-ratio: 4 / 5;
-  transition: border-color 160ms ease;
+  transition: background-color var(--ease), border-color var(--ease);
 }
 
 .work__thumb {
@@ -401,13 +484,13 @@ a {
 
 .work__badge {
   position: absolute;
-  left: 12px;
-  bottom: 12px;
-  padding: 7px 12px;
-  font-size: 0.8125rem;
+  left: var(--s-3);
+  bottom: var(--s-3);
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--t-small);
   font-weight: 550;
   color: var(--text);
-  background: rgba(8, 8, 10, 0.72);
+  background: rgba(7, 9, 7, 0.72);
   border: 1px solid var(--line-strong);
   border-radius: 999px;
   backdrop-filter: blur(6px);
@@ -416,14 +499,8 @@ a {
 .work__media--bare .work__badge {
   position: static;
   background: transparent;
-  border-color: var(--line-strong);
+  border-color: var(--accent-line);
   color: var(--accent);
-}
-
-@media (hover: hover) {
-  .work__media--link:hover {
-    border-color: var(--line-strong);
-  }
 }
 
 .work__media--empty {
@@ -436,11 +513,11 @@ a {
 
 .work__slot {
   color: var(--text-dim);
-  font-size: 0.8125rem;
+  font-size: var(--t-small);
 }
 
 .work__caption {
-  margin-top: 10px;
+  margin-top: var(--s-3);
 }
 
 .work__title {
@@ -451,61 +528,41 @@ a {
 
 .work__meta {
   display: block;
-  margin-top: 2px;
+  margin-top: var(--s-1);
   color: var(--text-dim);
-  font-size: 0.8125rem;
+  font-size: var(--t-small);
 }
 
-/* --- Contact ----------------------------------------------------------- */
+/* --- Contact ------------------------------------------------------------ */
 
 .actions {
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
+  gap: var(--s-3);
 }
 
 .btn {
   display: block;
-  padding: 15px 18px;
+  padding: var(--s-4) var(--s-5);
   text-align: center;
   font-size: 0.9375rem;
   font-weight: 550;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  transition: background-color 160ms ease, border-color 160ms ease;
+  transition: background-color var(--ease), border-color var(--ease);
 }
 
-.btn--accent {
-  background: linear-gradient(180deg, var(--accent-soft), transparent),
-    var(--surface);
-  border-color: rgba(183, 177, 255, 0.35);
-  color: var(--accent);
-}
-
-@media (hover: hover) {
-  .btn:hover {
-    background: var(--surface-hover);
-    border-color: var(--line-strong);
-  }
-  .btn--accent:hover {
-    border-color: rgba(183, 177, 255, 0.6);
-  }
-}
-
-/* --- Retour discret vers le hub ---------------------------------------- */
+/* --- Retour vers le hub -------------------------------------------------- */
 
 .back {
-  margin-top: 56px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
+  margin-top: var(--s-8);
+  padding-top: var(--s-5);
+  border-top: var(--border);
   text-align: center;
 }
 
 .backlink {
   color: var(--text-dim);
-  font-size: 0.875rem;
-  transition: color 160ms ease;
+  font-size: var(--t-body);
+  transition: color var(--ease);
 }
 
 @media (hover: hover) {
@@ -520,14 +577,17 @@ a {
 
 @media (min-width: 560px) {
   .wrap {
-    padding-top: 72px;
+    padding-top: var(--s-9);
+  }
+  .name {
+    font-size: 1.75rem;
   }
   .display {
-    font-size: 2.125rem;
+    font-size: 2.25rem;
   }
   .grid--two {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: var(--s-5);
     /* Une vidéo (16/9) et un reel (4/5) n'ont pas la même hauteur : chaque
        légende doit rester collée à son propre média, pas s'aligner sur la
        tuile la plus haute de la rangée. */
@@ -546,6 +606,6 @@ a {
     grid-template-columns: repeat(3, 1fr);
   }
   .section {
-    margin-top: 72px;
+    margin-top: var(--s-9);
   }
 }

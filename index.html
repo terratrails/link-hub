@@ -5,41 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- ===========================================================================
-       BALISES DE PARTAGE — la seule zone de contenu qui reste dans le HTML.
-       Pourquoi : les robots de Facebook, X, iMessage, WhatsApp et Discord ne
+       BALISES DE PARTAGE — elles restent écrites en dur ici, et c'est voulu :
+       les robots de Facebook, Instagram, WhatsApp, iMessage, X et Discord ne
        lancent pas le JavaScript. Une balise injectée depuis links.js serait
-       invisible pour eux et l'aperçu du lien partagé sortirait vide.
-       À éditer ici, donc, et à garder cohérent avec links.js.
+       invisible pour eux et l'aperçu du lien partagé sortirait vide — soit
+       exactement le cas qui compte quand ce lien est dans une bio Instagram.
+
+       Si tu branches un domaine perso, remplace https://4restdump.vercel.app
+       partout ci-dessous (canonical, og:url, et les URL d'images).
        ======================================================================== -->
-  <title>throughmorpheus — développeur & monteur vidéo</title>
-  <meta name="description" content="Mes projets de développement et mon activité de montage vidéo / clipping, au même endroit.">
+  <title>Forrest The Dump — monteur vidéo & développeur</title>
+  <meta name="description" content="Montage de clips et de formats courts, et mes projets de développement. Tous mes liens au même endroit.">
 
-  <!-- TODO : remplace https://exemple.com par ton domaine final, ici et dans montage.html. -->
-  <link rel="canonical" href="https://exemple.com/">
+  <link rel="canonical" href="https://4restdump.vercel.app/">
 
-  <!-- Open Graph (Facebook, Instagram, WhatsApp, Discord, LinkedIn…) -->
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="throughmorpheus">
+  <meta property="og:site_name" content="Forrest The Dump">
   <meta property="og:locale" content="fr_FR">
-  <meta property="og:url" content="https://exemple.com/">
-  <meta property="og:title" content="throughmorpheus — développeur & monteur vidéo">
-  <meta property="og:description" content="Mes projets de développement et mon activité de montage vidéo / clipping, au même endroit.">
-  <!-- L'image de partage doit être en URL absolue : les robots ne résolvent pas
-       les chemins relatifs. 1200x630 px recommandé. -->
-  <meta property="og:image" content="https://exemple.com/assets/og-image.png">
+  <meta property="og:url" content="https://4restdump.vercel.app/">
+  <meta property="og:title" content="Forrest The Dump — monteur vidéo & développeur">
+  <meta property="og:description" content="Montage de clips et de formats courts, et mes projets de développement. Tous mes liens au même endroit.">
+  <!-- L'URL doit rester absolue : les robots ne résolvent pas les chemins relatifs. -->
+  <meta property="og:image" content="https://4restdump.vercel.app/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="throughmorpheus — développeur et monteur vidéo">
+  <meta property="og:image:alt" content="Forrest The Dump — monteur vidéo et développeur">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="throughmorpheus — développeur & monteur vidéo">
-  <meta name="twitter:description" content="Mes projets de développement et mon activité de montage vidéo / clipping, au même endroit.">
-  <meta name="twitter:image" content="https://exemple.com/assets/og-image.png">
+  <meta name="twitter:title" content="Forrest The Dump — monteur vidéo & développeur">
+  <meta name="twitter:description" content="Montage de clips et de formats courts, et mes projets de développement. Tous mes liens au même endroit.">
+  <meta name="twitter:image" content="https://4restdump.vercel.app/assets/og-image.png">
 
-  <meta name="theme-color" content="#08080a">
+  <meta name="theme-color" content="#070907">
 
-  <!-- Favicon (placeholder : remplace les fichiers dans assets/). -->
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
@@ -53,8 +53,7 @@
     <p class="noscript">Ce site a besoin de JavaScript pour afficher ses liens.</p>
   </noscript>
 
-  <!-- Emplacements vides : tout le contenu est injecté par links.js.
-       Aucun texte ni lien à écrire ici. -->
+  <!-- Emplacements vides : tout le contenu vient de links.js. -->
   <main class="wrap">
     <header class="profile" id="profile"></header>
 

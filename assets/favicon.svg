@@ -1,8 +1,14 @@
-<!-- Favicon placeholder : un carré arrondi quasi-noir et un point d'accent.
-     Remplace ce fichier par ton propre logo quand tu l'auras. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logo">
-  <rect width="64" height="64" rx="14" fill="#08080a"/>
-  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#23232b"/>
-  <circle cx="32" cy="32" r="11" fill="none" stroke="#b7b1ff" stroke-width="3"/>
-  <circle cx="32" cy="32" r="3" fill="#b7b1ff"/>
+<!-- Favicon : le même carré arrondi que les cartes du site, et un « 4 »
+     tracé à la même couleur d'accent que le monogramme du hub.
+     Les couleurs sont écrites en dur : un SVG de favicon n'a pas accès aux
+     variables CSS de la page. Si tu changes --accent dans style.css,
+     change aussi #9dd3a7 ici. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Forrest The Dump">
+  <rect width="64" height="64" rx="14" fill="#0e120f"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#333d34"/>
+  <g fill="none" stroke="#9dd3a7" stroke-width="5"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 14 L17 41 L48 41"/>
+    <path d="M38 14 L38 51"/>
+  </g>
 </svg>

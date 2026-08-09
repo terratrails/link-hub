@@ -17,17 +17,20 @@ const SITE = {
      1. IDENTITÉ (page d'accueil)
      ------------------------------------------------------------------------ */
   profile: {
-    // TODO : ton nom ou ton pseudo, tel que tes clients te connaissent.
-    name: "throughmorpheus",
-    // TODO : une ligne, courte. Ce que tu fais, pas ton CV.
-    tagline: "Développeur & monteur vidéo — je construis des apps et je monte des clips.",
+    // Ton nom d'artiste, tel que les gens te connaissent.
+    name: "Forrest The Dump",
+    // Une ligne, courte. Ce que tu fais, pas ton CV.
+    tagline: "Monteur vidéo & développeur — je monte des clips et je construis des apps.",
+    // Affiché tant qu'aucune photo n'est fournie. Deux caractères maximum,
+    // sinon ça déborde du cercle.
+    monogram: "4D",
     avatar: {
-      // TODO : dépose ton image dans assets/ (carrée, 400x400 suffit),
-      // puis passe show à true. Tant que show vaut false, le hub s'affiche
-      // sans avatar — et sans requête inutile.
+      // Dépose ton image dans assets/ (carrée, 400x400 suffit), puis passe
+      // show à true. Tant que show vaut false, c'est le monogramme qui
+      // s'affiche — et aucune requête n'est faite.
       show: false,
       src: "assets/avatar.png",
-      alt: "Portrait de throughmorpheus", // texte lu par les lecteurs d'écran
+      alt: "Portrait de Forrest The Dump", // texte lu par les lecteurs d'écran
     },
   },
 
@@ -51,12 +54,12 @@ const SITE = {
     items: [
       {
         title: "YouTube",
-        description: "Mes vidéos et mes montages longs.", // TODO
+        description: "Mes vidéos et mes montages longs.",
         href: "https://www.youtube.com/@throughmorpheus",
       },
       {
         title: "Instagram",
-        description: "Clips, formats verticaux, coulisses.", // TODO
+        description: "Clips, formats verticaux, coulisses.",
         href: "https://www.instagram.com/4restdump_/",
       },
     ],
@@ -107,7 +110,7 @@ const SITE = {
      5. PIED DE PAGE (page d'accueil)
      ------------------------------------------------------------------------ */
   hubFooter: {
-    text: "© 2026 throughmorpheus", // TODO
+    text: "© 2026 Forrest The Dump",
   },
 
   /* ---------------------------------------------------------------------------
@@ -195,8 +198,10 @@ const SITE = {
         "Dis-moi le format, la durée et la deadline, je te réponds avec un prix et un délai.", // TODO
       email: {
         // TODO : mets ici l'adresse que tu veux montrer publiquement.
+        // C'est un mailto:, donc elle sera lisible dans le code source —
+        // utilise une adresse dédiée si tu préfères protéger ta boîte.
         address: "contact@exemple.com",
-        subject: "Projet de montage",      // pré-rempli dans le mail
+        subject: "Projet de montage — Forrest The Dump", // pré-rempli dans le mail
         label: "M'écrire par e-mail",
       },
       instagram: {
@@ -286,6 +291,15 @@ const SITE = {
     const profile = document.getElementById("profile");
     if (profile && SITE.profile) {
       const av = SITE.profile.avatar;
+
+      /** Le monogramme, replié dessus si la photo manque ou ne charge pas. */
+      function monogram() {
+        if (!SITE.profile.monogram) return null;
+        const mark = el("div", "monogram", SITE.profile.monogram);
+        mark.setAttribute("aria-hidden", "true");
+        return mark;
+      }
+
       if (av && av.show && av.src) {
         const img = el("img", "avatar");
         img.src = av.src;
@@ -293,12 +307,17 @@ const SITE = {
         img.width = 96;
         img.height = 96;
         img.decoding = "async";
-        // Si le fichier n'existe pas encore, on retire l'image plutôt que
-        // d'afficher une icône cassée.
+        // Si le fichier n'existe pas encore, on retombe sur le monogramme
+        // plutôt que d'afficher une icône cassée.
         img.addEventListener("error", function () {
-          img.remove();
+          const mark = monogram();
+          if (mark) img.replaceWith(mark);
+          else img.remove();
         });
         profile.appendChild(img);
+      } else {
+        const mark = monogram();
+        if (mark) profile.appendChild(mark);
       }
       profile.appendChild(el("h1", "name", SITE.profile.name));
       profile.appendChild(el("p", "tagline", SITE.profile.tagline));
