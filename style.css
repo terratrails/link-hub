@@ -1,0 +1,551 @@
+/* =============================================================================
+   style.css — styles communs aux deux pages.
+   Mobile-first : tout est écrit pour 380 px de large d'abord, les media
+   queries n'élargissent qu'ensuite.
+
+   Si tu veux changer l'apparence, commence par les variables ci-dessous :
+   une seule valeur y suffit pour reteindre tout le site.
+   ========================================================================== */
+
+:root {
+  /* --- Couleurs (à éditer ici, nulle part ailleurs) --------------------- */
+  --bg: #08080a;            /* fond quasi-noir */
+  --surface: #101014;       /* fond des boutons et blocs */
+  --surface-hover: #16161c; /* même chose, au survol */
+  --line: #23232b;          /* filets et bordures */
+  --line-strong: #34343f;   /* bordures au survol */
+  --text: #edece9;          /* blanc cassé */
+  --text-dim: #8d8d97;      /* texte secondaire */
+  --accent: #b7b1ff;        /* l'unique accent, discret */
+  --accent-soft: rgba(183, 177, 255, 0.09); /* aplat très léger de l'accent */
+
+  /* --- Rythme ----------------------------------------------------------- */
+  --radius: 14px;
+  --gap: 12px;
+  --screen-margin: 20px;
+  --hub-width: 600px;       /* largeur max du hub */
+  --page-width: 880px;      /* largeur max de la page montage, plus « vitrine » */
+
+  /* Police système uniquement : aucun fichier de police à télécharger. */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+
+  color-scheme: dark;
+}
+
+/* --- Remise à zéro minimale --------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Voile d'accent très léger en haut de page : la seule fantaisie du design. */
+  background-image: radial-gradient(
+    120% 60% at 50% -10%,
+    var(--accent-soft) 0%,
+    transparent 60%
+  );
+  background-repeat: no-repeat;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- Accessibilité : le focus clavier doit toujours se voir -------------- */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Respect du réglage système « réduire les animations ». */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* --- Contenants ---------------------------------------------------------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--hub-width);
+  margin: 0 auto;
+  padding: 56px var(--screen-margin) 64px;
+}
+
+.wrap--wide {
+  max-width: var(--page-width);
+}
+
+.noscript {
+  max-width: var(--hub-width);
+  margin: 0 auto;
+  padding: 16px var(--screen-margin) 0;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+/* =============================================================================
+   PAGE 1 — LE HUB
+   ========================================================================== */
+
+.profile {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  margin: 0 auto 18px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.tagline {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 34ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Sections ----------------------------------------------------------- */
+
+.group {
+  margin-top: 36px;
+}
+
+.group__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+  padding-left: 2px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* --- Boutons du hub ----------------------------------------------------- */
+
+.card {
+  position: relative;
+  display: block;
+  padding: 16px 44px 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: background-color 160ms ease, border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.card__title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 550;
+}
+
+.card__desc {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.card__chevron {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+/* Le survol reste volontairement sobre : bordure + fond, rien de plus. */
+@media (hover: hover) {
+  .card:hover {
+    background: var(--surface-hover);
+    border-color: var(--line-strong);
+  }
+  .card:hover .card__chevron {
+    color: var(--text);
+    transform: translate(2px, -50%);
+  }
+}
+
+.card:active {
+  transform: scale(0.995);
+}
+
+/* Le bouton mis en avant : le seul élément teinté de la page. */
+.card--featured {
+  background: linear-gradient(180deg, var(--accent-soft), transparent),
+    var(--surface);
+  border-color: rgba(183, 177, 255, 0.35);
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.card--featured .card__title {
+  font-size: 1.0625rem;
+  color: var(--accent);
+}
+
+.card--featured .card__chevron {
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .card--featured:hover {
+    border-color: rgba(183, 177, 255, 0.6);
+  }
+}
+
+/* Lien encore en placeholder ("#") : signalé, mais pas invisible. */
+.card.is-placeholder {
+  opacity: 0.55;
+}
+
+.card.is-placeholder .card__chevron {
+  content: none;
+  opacity: 0.4;
+}
+
+/* --- Pied de page ------------------------------------------------------- */
+
+.footer__text {
+  margin-top: 48px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+/* =============================================================================
+   PAGE 2 — MONTAGE (mise en page « vitrine »)
+   ========================================================================== */
+
+.montage-header {
+  margin-bottom: 48px;
+  max-width: 38ch;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.display {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin-top: 16px;
+  color: var(--text-dim);
+  font-size: 1rem;
+  max-width: 46ch;
+}
+
+.section {
+  margin-top: 56px;
+}
+
+.section__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section__desc {
+  margin-top: -8px;
+  margin-bottom: 20px;
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+}
+
+/* --- Grilles : une colonne sur mobile, jamais plus ---------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* --- Blocs « Ce que je propose » ---------------------------------------- */
+
+.block {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.block__title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.block__desc {
+  margin-top: 8px;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+/* --- Grille « Réalisations » ------------------------------------------- */
+
+.work {
+  margin: 0;
+}
+
+.work__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.work__media iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Les reels sont verticaux : on garde un cadre plus haut. */
+.work__media--link {
+  aspect-ratio: 4 / 5;
+  transition: border-color 160ms ease;
+}
+
+.work__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pas de vignette fournie : cadre neutre, le libellé porte l'information. */
+.work__media--bare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--surface-hover), var(--surface));
+}
+
+.work__badge {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 7px 12px;
+  font-size: 0.8125rem;
+  font-weight: 550;
+  color: var(--text);
+  background: rgba(8, 8, 10, 0.72);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.work__media--bare .work__badge {
+  position: static;
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .work__media--link:hover {
+    border-color: var(--line-strong);
+  }
+}
+
+.work__media--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: dashed;
+  background: none;
+}
+
+.work__slot {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.work__caption {
+  margin-top: 10px;
+}
+
+.work__title {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 550;
+}
+
+.work__meta {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+/* --- Contact ----------------------------------------------------------- */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.btn {
+  display: block;
+  padding: 15px 18px;
+  text-align: center;
+  font-size: 0.9375rem;
+  font-weight: 550;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.btn--accent {
+  background: linear-gradient(180deg, var(--accent-soft), transparent),
+    var(--surface);
+  border-color: rgba(183, 177, 255, 0.35);
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--surface-hover);
+    border-color: var(--line-strong);
+  }
+  .btn--accent:hover {
+    border-color: rgba(183, 177, 255, 0.6);
+  }
+}
+
+/* --- Retour discret vers le hub ---------------------------------------- */
+
+.back {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.backlink {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  transition: color 160ms ease;
+}
+
+@media (hover: hover) {
+  .backlink:hover {
+    color: var(--text);
+  }
+}
+
+/* =============================================================================
+   ÉLARGISSEMENTS — mobile d'abord, donc tout ce qui suit est du bonus.
+   ========================================================================== */
+
+@media (min-width: 560px) {
+  .wrap {
+    padding-top: 72px;
+  }
+  .display {
+    font-size: 2.125rem;
+  }
+  .grid--two {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    /* Une vidéo (16/9) et un reel (4/5) n'ont pas la même hauteur : chaque
+       légende doit rester collée à son propre média, pas s'aligner sur la
+       tuile la plus haute de la rangée. */
+    align-items: start;
+  }
+  .actions {
+    flex-direction: row;
+  }
+  .btn {
+    flex: 1 1 0;
+  }
+}
+
+@media (min-width: 760px) {
+  .grid--three {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .section {
+    margin-top: 72px;
+  }
+}

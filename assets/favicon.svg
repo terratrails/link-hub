@@ -1,0 +1,8 @@
+<!-- Favicon placeholder : un carré arrondi quasi-noir et un point d'accent.
+     Remplace ce fichier par ton propre logo quand tu l'auras. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Logo">
+  <rect width="64" height="64" rx="14" fill="#08080a"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#23232b"/>
+  <circle cx="32" cy="32" r="11" fill="none" stroke="#b7b1ff" stroke-width="3"/>
+  <circle cx="32" cy="32" r="3" fill="#b7b1ff"/>
+</svg>
