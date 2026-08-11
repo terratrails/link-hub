@@ -103,7 +103,7 @@ lien dans ta bio Instagram.
 Ces balises sont regroupées en haut de chaque fichier, dans un bloc commenté.
 Trois choses à y faire une fois pour toutes, avant de partager le lien :
 
-1. remplacer `https://forrestthedump.vercel.app` par ton vrai domaine (`og:url`, `canonical`) ;
+1. remplacer `https://4restdump.vercel.app` par ton vrai domaine (`og:url`, `canonical`) ;
 2. remplacer `assets/og-image.png` et `assets/og-montage.png` par tes propres
    images, en **1200 × 630 px** (celles fournies sont des placeholders unis) ;
 3. garder l'URL de l'image **absolue** (`https://tondomaine.com/assets/…`) : les
@@ -198,7 +198,7 @@ vers le domaine nu ou l'inverse, et garde une seule des deux formes comme
 principale.
 
 **f. Ne pas oublier** de repasser dans `index.html` et `montage.html` remplacer
-`https://forrestthedump.vercel.app` par ton domaine réel, dans `canonical`, `og:url` et les
+`https://4restdump.vercel.app` par ton domaine réel, dans `canonical`, `og:url` et les
 URL d'images de partage. Tant que tu ne l'as pas fait, l'aperçu du lien partagé
 pointera vers un domaine d'exemple.
 
